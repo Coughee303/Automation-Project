@@ -1,0 +1,21 @@
+public class SeleniumEventScraper {
+    public static void main(String[] args) {
+        System.setProperty("webdriver.chrome.driver", "path/to/chromedriver");
+
+        WebDriver driver = new ChromeDriver();
+        driver.get("https://www.eventbrite.com/d/united-states/all-events/");
+
+        // Get event details
+        List<WebElement> events = driver.findElements(By.className("search-event-card-wrapper"));
+
+        for (WebElement event : events) {
+            String name = event.findElement(By.className("event-card__formatted-name--is-clamped")).getText();
+            String date = event.findElement(By.className("eds-text-bs--fixed")).getText();
+            String location = event.findElement(By.className("card-text--truncated__one")).getText();
+
+            System.out.println("Event: " + name + " | Date: " + date + " | Location: " + location);
+        }
+
+        driver.quit();
+    }
+}
